@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+	<bean id="message-source" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="message_ko"/>
+	</bean>
+	<!-- 여기는 로직을 등록하는 xml문서 -->
+	<bean id="board-logic" class="mvc.board.BoardLogic"/>
+</beans>
+
+
+
+
+
+
+

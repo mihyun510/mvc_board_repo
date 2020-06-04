@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>/WEB-INF/classes/log4j.properties</param-value>
+	</context-param>
+	
+	<!-- 리스너가 있는 이상 밑에와같이 context-param이 한개는 꼭 들어가 있어야됨 밑에 init-param은 못읽는다. -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring-service.xml</param-value>
+	</context-param>
+	
+	<listener><!-- 이것이 있어야 여러개의 xml로 설계가 가능하다. 대신 xml이 1개 이상이 있어야됨. -->
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class><!-- 스프링 서버 기동을 위한 리스너 등록 -->
+	</listener>
+	<!-- 스프링에서 사용하는 서블릿 사용 - doget, dopost를 뛰어 넘을 수 있음. -->
+	<servlet>
+		<servlet-name>spring4</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class><!-- DispatcherServlet: 그냥 서블릿이다. 스프링을 사용하는 서블릿 것이네 -->
+		<init-param><!-- 위의 클래스가 인터셉트 했을때 추가적으로 메모리에 기억시켜야될것 -->
+			<!-- 서블릿에 대한 요청이 있을때마다 읽어들인다. 호출될때 읽고 그 다음 부터는 싱글톤으로 읽는다. -->
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring-servlet.xml</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>spring4</servlet-name>
+		<url-pattern>*.sp4</url-pattern><!-- 자바를 웹에서 실행하기 위해서 url을 설정해놔야된다. -->
+	</servlet-mapping>
+</web-app>

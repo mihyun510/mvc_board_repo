@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:mvc="http://www.springframework.org/schema/mvc"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/context
+ http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/mvc
+ http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+<bean id="default-handler-mapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+	<bean id="url-mapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping"><!-- 클래스를 매핑해주는 클래스 controllerMapper 클래스 역할-->
+		<property name="mappings"><!-- 자바의 propertise 클래스를 태그로 만든 것이 property임 -->
+			<props>
+				<!-- 클래스 이름 등록 key				value-->
+				<prop key="/board/boardList.sp4">board-controller</prop><!-- 컨트롤러 등록 id로 선언한 것임 -->
+				<prop key="/board/boardList2.sp4">board-controller</prop><!-- 컨트롤러 등록 id로 선언한 것임 -->
+			</props>
+		</property>
+	</bean>
+	<bean id="board-controller" class="mvc.board.BoardController"><!-- 컨트롤러 선언한것을 여기 id로 찾는다. -->
+		<property name="methodNameResolver" ref="board-resolver"/>
+		<property name="boardLogic" ref="board-logic"/>
+	</bean>
+	<bean id="board-resolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver"><!-- PropertiesMethodNameResolver : 메소드의 이름과유알에이름를 매칭해줌-->
+		<property name="mappings">
+			<props>
+				<prop key="/board/boardList.sp4">boardList</prop><!-- boardList메소드이름 위의 명령이 왓을때 이 것의 메소드가 실행된다. -->
+				<prop key="/board/boardList2.sp4">boardList2</prop><!-- 웹컨텐트 아래의 jsp로 접근하기 위한것..근데 안됨. 왜.?. -->
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/jsp/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+</beans>
+<!-- 여기는 서블릭을 등록하는 xml문서 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
